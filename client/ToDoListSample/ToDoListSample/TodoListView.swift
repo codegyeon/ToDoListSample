@@ -7,7 +7,10 @@
 
 import SwiftUI
 
-struct TodoView: View {
+struct TodoListView: View {
+    
+    @ObservedObject var todoController = TodoController()
+    
     var body: some View {
         NavigationView {
             ZStack {
@@ -18,7 +21,7 @@ struct TodoView: View {
                             NavigationLink(destination: TodoDetailView()) {
                                 VStack {
                                     HStack {
-                                        Text("title\(todo)")
+                                        Text("\(todoController.todos)")
                                             .foregroundColor(.black)
                                             .font(.title2)
                                             .fontWeight(.semibold)
@@ -62,6 +65,6 @@ struct TodoView: View {
 
 struct TodoView_Previews: PreviewProvider {
     static var previews: some View {
-        TodoView()
+        TodoListView()
     }
 }
