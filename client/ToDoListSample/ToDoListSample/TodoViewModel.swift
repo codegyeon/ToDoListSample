@@ -8,6 +8,7 @@
 import Foundation
 
 class TodoViewModel: ObservableObject {
+    
     let domain = "http://localhost:8080"
     let route = "/api/todolist/"
     
