@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TodoListView: View {
     
-    @ObservedObject var todoController = TodoController()
+    @ObservedObject var todoViewModel = TodoViewModel()
     
     var body: some View {
         NavigationView {
@@ -17,12 +17,13 @@ struct TodoListView: View {
                 Color.init(red: 244 / 255, green: 244 / 255, blue: 244 / 255).ignoresSafeArea()
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack() {
-                        ForEach(0..<10) { todo in
-                            NavigationLink(destination: TodoDetailView()) {
+                        ForEach(todoViewModel.todos, id: \.id) { todo in
+                            NavigationLink(destination: TodoDetailView(todo)) {
                                 VStack {
                                     HStack {
-                                        Text("\(todoController.todos)")
-                                            .foregroundColor(.black)
+                                        Text(todo.title)
+                                            .multilineTextAlignment(.leading)
+                                            .foregroundColor(todo.updated ? .gray : .black)
                                             .font(.title2)
                                             .fontWeight(.semibold)
                                             .padding(4)
@@ -32,7 +33,8 @@ struct TodoListView: View {
                                     .padding(.top, UIScreen.main.bounds.size.width / 32)
                                     HStack {
                                         Spacer()
-                                        Text("created\(todo)")
+                                        Text(todo.content)
+                                            .multilineTextAlignment(.trailing)
                                             .foregroundColor(.gray)
                                             .font(.caption)
                                             .fontWeight(.medium)
@@ -60,10 +62,13 @@ struct TodoListView: View {
                 }
             }
         }
+        .onAppear {
+            self.todoViewModel.getData()
+        }
     }
 }
 
-struct TodoView_Previews: PreviewProvider {
+struct TodoListView_Previews: PreviewProvider {
     static var previews: some View {
         TodoListView()
     }

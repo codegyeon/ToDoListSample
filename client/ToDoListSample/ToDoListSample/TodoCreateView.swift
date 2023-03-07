@@ -9,6 +9,8 @@ import SwiftUI
 
 struct TodoCreateView: View {
     
+    @ObservedObject var todoViewModel = TodoViewModel()
+    
     @State private var title = ""
     @State private var content = ""
     
@@ -20,16 +22,13 @@ struct TodoCreateView: View {
                         .padding()
                     TextField("Content", text: $content, axis: .vertical)
                         .padding()
-                    Button(action: { create() }) {
+                    Button(action: { todoViewModel.postData(title: title, content: content) }) {
                         Text("Add")
                     }
                 }
             }
         }
         .navigationTitle("Create")
-    }
-    private func create() {
-        
     }
 }
 

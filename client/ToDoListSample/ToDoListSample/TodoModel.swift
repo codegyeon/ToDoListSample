@@ -7,8 +7,16 @@
 
 import Foundation
 
-
-class TodoModel {
+struct TodoModel: Codable {
+    var id: Int
     var title: String
-    
+    var content: String
+    var timestamp: String
+    var updated: Bool
 }
+
+struct TodoModelPost: Codable {
+    var title: String
+    var content: String
+}
+

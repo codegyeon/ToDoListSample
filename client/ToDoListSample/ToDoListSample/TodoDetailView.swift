@@ -8,38 +8,34 @@
 import SwiftUI
 
 struct TodoDetailView: View {
-    @State private var title = "title"
-    @State private var content = "content"
+    
+    @ObservedObject var todoViewModel = TodoViewModel()
+    
+    @State var todo: TodoModel
+    
+    init(_ todo: TodoModel) {
+        self.todo = todo
+    }
     
     var body: some View {
         ZStack {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack {
-                    Text(title)
+                    Text(todo.title)
                         .padding()
-                    Text(title)
+                    Text(todo.content)
                         .padding()
-                    Button(action: { update() }) {
-                        Text("Edit")
+                    Button(action: { todoViewModel.patchData(id: todo.id, updated: todo.updated) }) {
+                        Text("Done")
                     }
-                    Button(action: { delete() }) {
+                    .padding()
+                    Button(action: { todoViewModel.deleteData(id: todo.id) }) {
                         Text("Delete")
+                            .foregroundColor(.red)
                     }
                 }
             }
         }
         .navigationTitle("Create")
-    }
-    private func update() {
-        
-    }
-    private func delete() {
-        
-    }
-}
-
-struct TodoDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        TodoDetailView()
     }
 }
